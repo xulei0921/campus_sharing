@@ -1,0 +1,31 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from .database import engine, Base
+from .api import users
+
+# 创建数据库
+Base.metadata.create_all(bind=engine)
+
+# 初始化FastAPI应用
+app = FastAPI(
+    title="校园闲置物品共享与置换平台",
+    description="一个基于FastAPI、Vue3和MySQL的校园闲置物品共享与置换平台API",
+    version="1.0.0"
+)
+
+# 配置CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # Vue前端默认地址
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+
+# 注册路由
+app.include_router(users.router, prefix="/api/users", tags=["用户"])
+
+# 根路径
+@app.get("/")
+def read_root():
+    return {"message": "欢迎使用校园闲置物品共享与置换平台API"}
