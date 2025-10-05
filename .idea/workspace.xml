@@ -5,22 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0511d61c-ec62-443d-980f-f20536de5cb5" name="更改" comment="完成了评价功能模块的实现">
-      <change afterPath="$PROJECT_DIR$/backend/app/api/chats.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app/api/items.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app/api/reviews.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app/api/transactions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app/crud/chats.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app/crud/items.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app/crud/reviews.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app/crud/transactions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/api/categories.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/api/categories.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/api/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/api/users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/crud/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/crud/users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/dependencies.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +22,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "git@github.com:xulei0921/campus_sharing.git",
+    "accountId": "334898e6-d204-4d02-b60b-0345b688c3c6"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -108,7 +99,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master" />
+                        <option value="origin/master" />
                       </list>
                     </value>
                   </entry>
