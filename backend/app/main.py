@@ -1,7 +1,10 @@
+from idlelib.pyparse import trans
+from sys import prefix
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine, Base
-from .api import users, categories
+from .api import users, categories, items, chats, transactions, reviews
 
 # 创建数据库
 Base.metadata.create_all(bind=engine)
@@ -25,6 +28,10 @@ app.add_middleware(
 # 注册路由
 app.include_router(users.router, prefix="/api/users", tags=["用户"])
 app.include_router(categories.router, prefix="/api/categories", tags=["分类"])
+app.include_router(items.router, prefix="/api/items", tags=["物品"])
+app.include_router(chats.router, prefix="/api/chats", tags=["聊天"])
+app.include_router(transactions.router, prefix="/api/transactions", tags=["交易"])
+app.include_router(reviews.router, prefix="/api/reviews", tags=["评价"])
 
 # 根路径
 @app.get("/")

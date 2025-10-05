@@ -17,6 +17,15 @@ def create_category(
     db: Session = Depends(get_db),
     current_user: schemas.UserResponse = Depends(dependencies.get_current_user)
 ):
+    """
+        创建新分类（需要登录）
+
+        参数：
+        - category: 分类信息（名称、描述）
+
+        返回：
+        - 新创建的分类信息
+    """
     return categories_crud.create_category(db=db, category=category)
 
 # 获取所有分类
@@ -26,6 +35,16 @@ def read_categories(
     limit: int = 100,  # 最多返回100条记录
     db: Session = Depends(get_db)
 ):
+    """
+        获取所有分类列表（无需登录）
+
+        参数：
+        - skip: 跳过前n条记录（分页）
+        - limit: 最多返回n条记录
+
+        返回：
+        - 分类列表
+    """
     categories = categories_crud.get_categories(db, skip=skip, limit=limit)
     return categories
 
@@ -35,6 +54,15 @@ def read_category(
     category_id: int,
     db: Session = Depends(get_db)
 ):
+    """
+        根据ID获取分类详情（无需登录）
+
+        参数：
+        - category_id: 分类ID
+
+        返回：
+        - 分类详细信息
+    """
     db_category = categories_crud.get_category(db, category_id=category_id)
 
     if db_category is None:
@@ -50,6 +78,16 @@ def update_category(
         db: Session = Depends(get_db),
         current_user: schemas.UserResponse = Depends(dependencies.get_current_user)
 ):
+    """
+        更新分类信息（需要登录）
+
+        参数：
+        - category_id: 分类ID
+        - category: 新的分类信息
+
+        返回：
+        - 更新后的分类信息
+    """
     return categories_crud.update_category(
         db=db,
         category_id=category_id,
@@ -63,4 +101,13 @@ def delete_category(
         db: Session = Depends(get_db),
         current_user: schemas.UserResponse = Depends(dependencies.get_current_user)
 ):
+    """
+        删除分类（需要登录）
+
+        参数：
+        - category_id: 分类ID
+
+        返回：
+        - 成功删除的提示信息
+        """
     return categories_crud.delete_category(db=db, category_id=category_id)

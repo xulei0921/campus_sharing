@@ -20,6 +20,19 @@ def get_current_user(
     token: str = Depends(oauth2_scheme),
     db: Session = Depends(get_db)
 ):
+    """
+        从JWT令牌中获取当前用户
+
+        依赖项：
+        - token: 从请求头中获取的JWT令牌
+        - db: 数据库会话
+
+        返回：
+        - 当前用户对象
+
+        异常：
+        - 401 Unauthorized: 令牌无效或过期
+        """
     # 认证失败异常
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,

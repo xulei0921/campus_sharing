@@ -7,6 +7,7 @@ from ..utils import get_password_hash, verify_password
 
 # 创建用户
 def create_user(db: Session, user: schemas.UserCreate):
+    """创建新用户"""
     # 检查用户名是否已存在
     db_user = db.query(models.User).filter(models.User.username == user.username).first()
     if db_user:
@@ -40,14 +41,17 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 # 获取用户 by ID
 def get_user(db: Session, user_id: int):
+    """根据ID获取用户"""
     return db.query(models.User).filter(models.User.id == user_id).first()
 
 # 获取用户 by 用户名
 def get_user_by_username(db: Session, username: str):
+    """根据用户名获取用户"""
     return db.query(models.User).filter(models.User.username == username).first()
 
 # 验证用户（登录）
 def authenticate_user(db: Session, username: str, password: str):
+    """验证用户凭据"""
     user = get_user_by_username(db, username)
 
     if not user:
@@ -60,6 +64,7 @@ def authenticate_user(db: Session, username: str, password: str):
 
 # 更新用户信息
 def update_user(db: Session, user_id: int, user_update: schemas.UserUpdate):
+    """更新用户信息"""
     db_user = get_user(db, user_id)
 
     if not db_user:
@@ -80,6 +85,7 @@ def update_user(db: Session, user_id: int, user_update: schemas.UserUpdate):
 
 # 更新用户信用分
 def update_credit_score(db: Session, user_id: int, score_change: int):
+    """更新用户信用分"""
     db_user = get_user(db, user_id)
 
     if not db_user:

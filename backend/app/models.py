@@ -29,7 +29,7 @@ class User(Base):
     avatar = Column(String(255), nullable=True)
     credit_score = Column(Integer, default=100)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now(), server_default=func.now())
 
     # 关系：用户发布的物品
     items = relationship("Item", back_populates="owner")
@@ -41,6 +41,9 @@ class User(Base):
     buyer_transactions = relationship("Transaction", foreign_keys="Transaction.buyer_id", back_populates="buyer")
     # 关系：用户作为卖家的交易
     seller_transactions = relationship("Transaction", foreign_keys="Transaction.seller_id", back_populates="seller")
+    # 关系：评论者
+    reviewer_reviews = relationship("Review", foreign_keys="Review.reviewer_id", back_populates="reviewer")
+
     # 关系：用户的收藏
     favorites = relationship("Favorite", back_populates="user")
 
@@ -68,7 +71,7 @@ class Item(Base):
     category_id = Column(Integer, ForeignKey("categories.id"))
     user_id = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now(), server_default=func.now())
 
     # 关系：物品所属分类
     category = relationship("Category", back_populates="items")
@@ -124,7 +127,7 @@ class Transaction(Base):
     meeting_time = Column(DateTime, nullable=True)
     meeting_location = Column(String(100), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now(), server_default=func.now())
 
     # 关系：交易涉及的物品
     item = relationship("Item", back_populates="transactions")
@@ -149,6 +152,8 @@ class Review(Base):
 
     # 关系：评价所属交易
     transaction = relationship("Transaction", back_populates="review")
+    # 关系：评论者
+    reviewer = relationship("User", foreign_keys=[reviewer_id], back_populates="reviewer_reviews")
 
 # 收藏模型
 class Favorite(Base):
