@@ -4,7 +4,7 @@ from sys import prefix
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine, Base
-from .api import users, categories, items, chats, transactions, reviews
+from .api import users, categories, items, chats, transactions, reviews, favorites
 
 # 创建数据库
 Base.metadata.create_all(bind=engine)
@@ -32,6 +32,7 @@ app.include_router(items.router, prefix="/api/items", tags=["物品"])
 app.include_router(chats.router, prefix="/api/chats", tags=["聊天"])
 app.include_router(transactions.router, prefix="/api/transactions", tags=["交易"])
 app.include_router(reviews.router, prefix="/api/reviews", tags=["评价"])
+app.include_router(favorites.router, prefix="/api/favorites", tags=["收藏"])
 
 # 根路径
 @app.get("/")
