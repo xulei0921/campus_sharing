@@ -2,8 +2,6 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 
-from sqlalchemy.sql.functions import current_user
-
 from .. import schemas, dependencies
 from ..database import get_db
 from ..crud import reviews as reviews_crud

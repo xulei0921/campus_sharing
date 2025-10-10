@@ -1,12 +1,6 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
-import {
-        registerUser,
-        loginUser,
-        getCurrentUser,
-        updateCurrentUser,
-        getUserById
-       } from '@/api/user'
+import { isTokenExpired } from "@/utils/jwt"
 
 // 用户模块 token setToken removeToken
 export const useUserStore = defineStore('big-user', () => {
@@ -19,10 +13,20 @@ export const useUserStore = defineStore('big-user', () => {
         token.value = ''
     }
 
+    const isLogin =  () => {
+        if (isTokenExpired(token.value)) {
+            token.value = ''
+            // localStorage.removeItem('big-user')
+            return false
+        }
+        return true
+    }
+
     return {
         token,
         setToken,
-        removeToken
+        removeToken,
+        isLogin
     }
 }, {
     persist: true

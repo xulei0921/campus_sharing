@@ -43,6 +43,10 @@ instance.interceptors.response.use(
         // TODO 5. 处理401错误
         // 错误的特殊情况 => 401 权限不足 或 token 过期 => 拦截到登录
         if (err.response?.status === 401) {
+            const userStore = useUserStore()
+            if (userStore.token) {
+                userStore.removeToken()
+            }
             router.push('/login')
             ElMessage.error({ message: err.response?.data?.detail } || '请求失败，请稍后重试')
             return Promise.reject(err.response?.data?.detail || '请求失败')
