@@ -1,6 +1,3 @@
-from idlelib.pyparse import trans
-from sys import prefix
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine, Base
@@ -19,7 +16,7 @@ app = FastAPI(
 # 配置CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Vue前端默认地址
+    allow_origins=["http://localhost:8173"],  # Vue前端默认地址
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
