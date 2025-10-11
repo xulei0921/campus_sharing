@@ -18,7 +18,7 @@
 
             <div class="user-actions">
                 
-                <el-dropdown>
+                <el-dropdown v-if="isLogin()">
                     <div class="el-dropdown-link">
                         <el-avatar @click="$router.push('/profile')" class="avatar">
                             <img src="https://picsum.photos/200/200" alt="用户头像">
@@ -35,6 +35,10 @@
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
+                <div v-else class="not-login" @click="$router.push('/login')">
+                    <el-avatar :icon="UserFilled"></el-avatar>
+                    <span>去登录</span>
+                </div>
             </div>
         </div>
     </el-header>
@@ -44,7 +48,7 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ArrowDown } from '@element-plus/icons-vue'
+import { ArrowDown, UserFilled } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores'
 import { getCurrentUser } from '@/api/user'
 
@@ -139,5 +143,19 @@ onMounted(() => {
 
 .el-tooltip__trigger:focus {
     outline: none;
+}
+
+.not-login {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.not-login:hover {
+    color: #409eff;
+}
+
+.not-login span {
+    margin: 5px;
 }
 </style>

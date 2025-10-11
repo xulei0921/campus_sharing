@@ -1,4 +1,7 @@
 <template>
+    <el-page-header :icon="ArrowLeft" title="返回" @back="goBack">
+        
+    </el-page-header>
     <el-row class="login-page">
         <el-col :span="6" :offset="9" class="form">
             <!-- 注册表单 -->
@@ -77,7 +80,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 // import { ElMessage } from 'element-plus';
-import { User, Lock, Message, Iphone } from '@element-plus/icons-vue'
+import { User, Lock, Message, Iphone, ArrowLeft } from '@element-plus/icons-vue'
 import { registerUser, loginUser } from '@/api/user'
 import { useRouter } from 'vue-router';
 
@@ -135,6 +138,10 @@ const login = async () => {
     setToken(res.access_token)
     ElMessage.success('登录成功')
     router.push('/index')
+}
+
+const goBack= () => {
+    router.go(-1)
 }
 
 watch(isRegister, () => {
