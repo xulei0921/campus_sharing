@@ -1,0 +1,20 @@
+import request from '@/utils/request'
+
+// 发布新物品
+export const createItem = () => {
+    return request.post('/items', { title, description, price, category_id, location, images })
+}
+
+// 获取物品列表
+export const getItems = (params) => {
+    // 合并默认参数和传入参数（默认第一页，每页10条）
+    const queryParams = {
+        page: 1,
+        limit: 10,
+        ...params
+    }
+
+    return request.get('/items', {
+        params: queryParams
+    })
+}

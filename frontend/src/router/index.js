@@ -23,7 +23,12 @@ const router = createRouter({
     {
       path: '/items/create',
       component: () => import('@/views/CreateItemView.vue'),
-      meta: { requiresAuth: true }
+      meta: { title: '发布物品', requiresAuth: true }
+    },
+    {
+      path: '/my-items',
+      component: () => import('@/views/MyItemsView.vue'),
+      meta: { title: '我的物品', requiresAuth: true }
     }
   ],
 })
