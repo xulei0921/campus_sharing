@@ -116,6 +116,7 @@ const fetchItems = async () => {
         }
 
         const resp = await getItems(params)
+        console.log(resp)
         items.value = resp
 
     } catch (error) {

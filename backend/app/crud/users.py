@@ -77,6 +77,7 @@ def update_user(db: Session, user_id: int, user_update: schemas.UserUpdate):
     for key, value in update_data.items():
         setattr(db_user, key, value)
 
+    db.add(db_user)
     db.commit()
     db.refresh(db_user)
 

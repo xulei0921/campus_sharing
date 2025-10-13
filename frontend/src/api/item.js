@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
 // 发布新物品
-export const createItem = () => {
-    return request.post('/items', { title, description, price, category_id, location, images })
+export const createItem = ({title, description, price, category_id, location, images}) => {
+    return request.post('/items/', { title, description, price, category_id, location, images })
 }
 
 // 获取物品列表
@@ -14,7 +14,7 @@ export const getItems = (params) => {
         ...params
     }
 
-    return request.get('/items', {
+    return request.get('/items/', {
         params: queryParams
     })
 }

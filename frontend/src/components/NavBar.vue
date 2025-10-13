@@ -21,7 +21,7 @@
                 <el-dropdown v-if="isLogin()">
                     <div class="el-dropdown-link">
                         <el-avatar @click="$router.push('/profile')" class="avatar">
-                            <img src="https://picsum.photos/200/200" alt="用户头像">
+                            <img :src="currentUser.avatar || 'https://picsum.photos/200/200'" alt="用户头像">
                         </el-avatar>
                         <span class="username">{{ currentUser.username || '未登录'}}</span>
                         <el-icon class="el-dropdown-icon">
