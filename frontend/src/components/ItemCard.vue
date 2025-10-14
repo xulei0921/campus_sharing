@@ -2,7 +2,7 @@
     <div class="item-card">
         <div class="item-image">
             <el-image
-                :src="item.images[0] || `https://picsum.photos/id/${Math.floor(Math.random() * (1001))}/400/300`"
+                :src="item.images[0]?.image_url || `https://picsum.photos/id/${Math.floor(Math.random() * (1001))}/400/300`"
                 fit="cover"
             ></el-image>
             <el-tag

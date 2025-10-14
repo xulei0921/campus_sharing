@@ -1,10 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Query
+from fastapi import APIRouter, Depends, HTTPException, status, Query, UploadFile, File
 from sqlalchemy.orm import Session
 from typing import List, Optional
 
 from .. import  schemas, dependencies
 from ..database import get_db
 from ..crud import items as items_crud
+from pathlib import Path
+import uuid
 
 # 创建路由实例
 router = APIRouter()
@@ -156,3 +158,21 @@ def delete_item(
     """
     # 删除物品（需要登录，只能删除自己的物品）
     return items_crud.delete_item(db=db, item_id=item_id, user_id=current_user.id)
+
+# 将本地图片上传到服务器
+@router.post("/upload-image")
+async def upload_image(file: UploadFile = File(...)):
+    # 校验文件类型
+    if not file.content_type.startswith("image/"):
+        raise HTTPException(status_code=400, detail="只允许上传图片文件")
+
+    # 生成唯一文件名
+    file_ext = file.filename.split(".")[-1]
+    file_name=f"item_{uuid.uuid4()}.{file_ext}"
+
+    # 保存文件到 static/images目录
+    file_path = dependencies.IMAGE_DIR / file_name
+    with open(file_path, "wb") as f:
+        f.write(await file.read())
+
+    return {"file_name": file_name}

@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from .database import get_db
 from . import models
 from .utils import SECRET_KEY, ALGORITHM
+from pathlib import Path
 
 # OAuth2密码Bearer模式
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/users/login")
@@ -58,3 +59,11 @@ def get_current_user(
         raise credentials_exception
 
     return user
+
+# 项目根目录
+BASE_DIR = Path(__file__).parent.parent
+
+# 定义图片存储目录（绝对路径，避免相对路径混乱）
+IMAGE_DIR = BASE_DIR / "static" / "images"
+# 确保目录存在（不存在则自动创建，包括多级目录）
+IMAGE_DIR.mkdir(parents=True, exist_ok=True)

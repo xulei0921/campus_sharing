@@ -24,15 +24,17 @@ def create_item(db: Session, item: schemas.ItemCreate, user_id: int):
 
     # 添加物品图片
     if item.images:
-        for image in item.images:
-            db_item = models.ItemImage(
+        for file_name in item.images:
+            full_image_url=f"http://localhost:8000/static/images/{file_name.image_url}"
+
+            db_image = models.ItemImage(
                 item_id=db_item.id,
-                image_url=image.image_url
+                image_url=full_image_url
             )
-            db.add(db_item)
+            db.add(db_image)
         db.commit()
         # 刷新物品信息以包含图片
-        db.refresh(db_item)
+        db.refresh(db_image)
     return db_item
 
 # 获取物品列表（支持筛选）

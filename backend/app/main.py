@@ -1,10 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+import os
+from pathlib import Path
 from .database import engine, Base
 from .api import users, categories, items, chats, transactions, reviews, favorites
 
 # 创建数据库
 Base.metadata.create_all(bind=engine)
+
+BASE_DIR = Path(__file__).parent.parent
 
 # 初始化FastAPI应用
 app = FastAPI(
@@ -12,6 +17,8 @@ app = FastAPI(
     description="一个基于FastAPI、Vue3和MySQL的校园闲置物品共享与置换平台API",
     version="1.0.0"
 )
+
+app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 
 # 配置CORS
 app.add_middleware(

@@ -18,3 +18,12 @@ export const getItems = (params) => {
         params: queryParams
     })
 }
+
+// 上传物品图片
+export const uploadItemImages = (files) => {
+    const formData = new FormData()
+    files.forEach(file => {
+        formData.append('files', file)
+    })
+    return request.post('/items/upload-image', formData)
+} 

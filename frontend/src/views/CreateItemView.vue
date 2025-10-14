@@ -47,11 +47,9 @@
                 <el-form-item label="物品图片" prop="images">
                     <el-upload
                         class="upload"
-                        :action="`${baseURL}/items`"
+                        :action="`${baseURL}/items/upload-image`"
                         multiple
-                        :auto-upload="false"
-                        :on-change="handleFileChange"
-                        :on-remove="handleRemove"
+                        :on-success="handleImageSuccess"
                         :limit="3"
                         :file-list="fileList"
                         list-type="picture-card"
@@ -83,7 +81,7 @@
 import { ref, onMounted } from 'vue';
 import NavBar from '@/components/NavBar.vue';
 import { getAllCategories } from '@/api/categories';
-import { createItem } from '@/api/item';
+import { createItem, uploadItemImages } from '@/api/item';
 import { Money } from '@element-plus/icons-vue'
 import { baseURL } from '@/utils/request';
 
@@ -132,30 +130,19 @@ const fetchCategories = async () => {
     }
 }
 
-// 选择图片后添加到文件列表
-const handleFileChange = (file, fileList) => {
-    // 过滤掉已上传的文件（仅保留待上传的）
-    // console.log(file)
-    // formModel.value.images.push(file.url)
-    // console.log(formModel)
-    fileList.value = fileList.map(f => f.raw)
-    console.log(fileList.value)
-    formModel.value.images = fileList.value
-}
-
-// 移除图片
-const handleRemove = (file, fileList) => {
-    // console.log(file)
-    // formModel.value.images.filter
-    fileList.value = fileList.map(f => f.url)
-    // console.log(fileList.value)
-    formModel.value.images = fileList.value
+const handleImageSuccess = (response) => {
+    formModel.value.images.push(response.file_name)
+    console.log(formModel)
 }
 
 // 提交表单数据
 const submitForm = async () => {
+    formModel.value.images = formModel.value.images.map(fileName => ({
+        image_url: fileName
+    }))
+
     try {
-        console.log(formModel)
+        console.log(formModel.value)
         await form.value.validate()
         await createItem(formModel.value)
         ElMessage.success("发布物品成功")
