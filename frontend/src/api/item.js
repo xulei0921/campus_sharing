@@ -26,4 +26,9 @@ export const uploadItemImages = (files) => {
         formData.append('files', file)
     })
     return request.post('/items/upload-image', formData)
-} 
+}
+
+// 根据ID获取物品详情
+export const getItemById = (item_id) => {
+    return request.get(`/items/${item_id}`)
+}

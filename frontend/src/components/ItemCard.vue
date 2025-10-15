@@ -91,8 +91,8 @@ onMounted(() => {
 
 <style scoped>
 .item-card {
-    width: 240px;
-    height: 380px;
+    width: 210px;
+    height: 360px;
     /* background: saddlebrown; */
     border-radius: 8px;
     overflow: hidden;
@@ -100,6 +100,7 @@ onMounted(() => {
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
     margin-right: 30px;
+    margin-bottom: 30px;
 }
 
 .item-card:hover {
@@ -109,8 +110,8 @@ onMounted(() => {
 
 .item-image {
     position: relative;
-    height: 240px;
-    width: 240px;
+    height: 220px;
+    width: 210px;
     /* background-color: skyblue; */
 }
 

@@ -34,7 +34,6 @@
                     </template>
                 </el-input>
             </div>
-
         </div>
 
         <!-- 物品列表 -->
@@ -77,6 +76,7 @@ const loading = ref(false)
 const categories = ref([])
 const items = ref([])
 const pageSize = ref(5)
+const router = useRouter()
 
 onMounted(() => {
     fetchCategories()
@@ -93,6 +93,7 @@ const handleFilterChange = () => {
 
 const goToDetail = (id) => {
     console.log(id)
+    router.push(`/items/${id}`)
 }
 
 const fetchCategories = async () => {

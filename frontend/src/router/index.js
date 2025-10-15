@@ -29,6 +29,15 @@ const router = createRouter({
       path: '/my-items',
       component: () => import('@/views/MyItemsView.vue'),
       meta: { title: '我的物品', requiresAuth: true }
+    },
+    {
+      path: '/items/:id',
+      component: () => import('@/views/ItemDetailView.vue'),
+      meta: { title: '物品详情', requiresAuth: false }
+    },
+    {
+      path: '/user/:id',
+      
     }
   ],
 })
