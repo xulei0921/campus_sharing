@@ -22,7 +22,7 @@ export const getCurrentUser = () => {
 
 // 更新当前登录用户的信息
 export const updateCurrentUser = (data) => {
-    return request.put('/users/me')
+    return request.put('/users/me', data)
 }
 
 // 根据ID获取用户信息

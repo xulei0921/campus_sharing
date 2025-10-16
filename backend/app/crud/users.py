@@ -94,8 +94,10 @@ def update_credit_score(db: Session, user_id: int, score_change: int):
             detail="用户不存在"
         )
 
-    # 更新信用分，最低0分
-    db_user.credit_score = max(0, db_user.credit_score + score_change)
+    new_score = db_user.credit_score + score_change
+
+    # 更新信用分，最低0分，最高100分
+    db_user.credit_score = max(0, min(100, new_score))
 
     db.commit()
     db.refresh(db_user)

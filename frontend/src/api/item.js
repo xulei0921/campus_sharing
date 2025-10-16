@@ -32,3 +32,8 @@ export const uploadItemImages = (files) => {
 export const getItemById = (item_id) => {
     return request.get(`/items/${item_id}`)
 }
+
+// 获取当前用户发布的物品
+export const readMyItems = () => {
+    return request.get('/items/my-items')
+}

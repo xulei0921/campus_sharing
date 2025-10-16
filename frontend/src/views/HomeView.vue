@@ -92,7 +92,7 @@ const handleFilterChange = () => {
 }
 
 const goToDetail = (id) => {
-    console.log(id)
+    // console.log(id)
     router.push(`/items/${id}`)
 }
 

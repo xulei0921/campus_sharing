@@ -30,10 +30,11 @@
                         <el-divider />
 
                         <div class="details">
-                            <p><span class="label">物品描述: {{ item.description }}</span></p>
-                            <p><span class="label">物品分类: {{ item.category.name }}</span></p>
-                            <p><span class="label">发布时间: {{ item.created_at }}</span></p>
-                            <p><span class="label">状态: </span>
+                            <p><span class="label">物品描述:</span>{{ item.description }}</p>
+                            <p><span class="label">物品分类:</span>{{ item.category.name }}</p>
+                            <p><span class="label">发布时间:</span>{{ formattedTime }}</p>
+                            <p><span class="label">卖家推荐交易地点:</span>{{ item.location }}</p>
+                            <p class="status-tag"><span class="label">状态: </span>
                                 <el-tag v-if="item.status === 'available'" type="success">
                                     可交易
                                 </el-tag>
@@ -54,7 +55,7 @@
                                 <el-avatar>
                                     <img :src="item.owner.avatar" alt="">
                                 </el-avatar>
-                                <span class="seller-name">{{ item.owner.username }}</span>
+                                <div class="seller-name">{{ item.owner.username }}</div>
                             </div>
                         </div>
 
@@ -79,21 +80,30 @@
                     </div>
                 </el-col>
             </el-row>
+
+            <TransactionForm
+                v-model:visible="showTransactionForm"
+                :item_id="itemId"
+            />
+
         </div>
     </div>
 </template>
 
 <script setup>
 import NavBar from '@/components/NavBar.vue';
+import TransactionForm from '@/components/TransactionForm.vue';
 import { getItemById } from '@/api/item';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { dayjs } from 'element-plus';
 
 const route = useRoute()
 const router = useRouter()
 const itemId = route.params.id
 const item = ref({})
 const isLoading = ref(true)
+const showTransactionForm = ref(false)
 
 const fetchItemDetail = async (itemId) => {
     try {
@@ -107,6 +117,14 @@ const fetchItemDetail = async (itemId) => {
         isLoading.value = false
     }
 }
+
+const handleCreateTransaction = () => {
+    showTransactionForm.value = true
+}
+
+const formattedTime = computed(() => {
+    return dayjs(item.value.created_at).format("YYYY-MM-DD HH:mm:ss")
+})
 
 onMounted(() => {
     // console.log(itemId)
@@ -144,12 +162,33 @@ onMounted(() => {
     border-radius: 4px;
 }
 
+.label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
 .seller {
     cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.seller-name {
+    margin-left: 10px;
+}
+
+.status-tag {
+    display: flex;
+    align-items: center;
 }
 
 .custom-carousel {
     width: 60%;
     margin: 100px auto;
+}
+
+.actions {
+    margin-top: 20px;
+    display: flex;
 }
 </style>

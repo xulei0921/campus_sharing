@@ -6,6 +6,7 @@ import { useUserStore } from "@/stores";
 
 // const baseURL = 'http://127.0.0.1:8000/api'
 const baseURL = '/api'
+const baseImgURL = 'http://127.0.0.1:8000/static/images'
 
 const instance = axios.create({
     // TODO 1. 基础地址，超时时间
@@ -61,4 +62,4 @@ instance.interceptors.response.use(
 )
 
 export default instance
-export { baseURL }
+export { baseURL, baseImgURL }
