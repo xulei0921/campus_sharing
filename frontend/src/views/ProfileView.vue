@@ -37,22 +37,41 @@
                 </div>
             </el-card>
 
-            <!-- 发布的物品列表 -->
-            <div class="items-section">
-                <h3>发布的物品</h3>
-                <div class="items-grid">
-                    <ItemCard 
-                        v-for="item in items"
-                        :item="item"
-                        :key="item.id"
-                        @click="goToDetail(item.id)"
-                    />
-                </div>
-
-                <div v-if="items.length === 0 && !loading" class="empty-state">
-                    <el-empty description="暂无发布的物品" />
-                </div>
-            </div>
+            <!-- 发布的物品列表和收藏的物品列表 -->
+            <el-tabs v-model="activeName" class="items-tabs">
+                <el-tab-pane label="发布的物品" name="first">
+                    <div class="items-section">
+                        <!-- <h3>发布的物品</h3> -->
+                        <div class="items-grid">
+                            <ItemCard 
+                                v-for="item in items"
+                                :item="item"
+                                :key="item.id"
+                                @click="goToDetail(item.id)"
+                            />
+                        </div>
+                    
+                        <div v-if="items.length === 0 && !loading" class="empty-state">
+                            <el-empty description="暂无发布的物品" />
+                        </div>
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="我的收藏" name="second">
+                    <div class="items-section">
+                        <div class="items-grid">
+                            <div v-for="favorite in favoritedItems">
+                                <ItemCard 
+                                    :item="favorite.item"
+                                    @click="goToDetail(favorite.item.id)"
+                                />
+                            </div>
+                        </div>
+                        <div v-if="favoritedItems.length === 0 && !loading" class="empty-state">
+                            <el-empty description="暂无收藏的物品"></el-empty>
+                        </div>
+                    </div>
+                </el-tab-pane>
+            </el-tabs>
         </div>
 
         <!-- 编辑资料对话框 -->
@@ -108,8 +127,9 @@ import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { getCurrentUser, updateCurrentUser } from '@/api/user';
 import { readMyItems } from '@/api/item';
+import { readUserFavorites } from '@/api/favorites';
 import { dayjs } from 'element-plus';
-import { Plus } from '@element-plus/icons-vue'
+import { Loading, Plus } from '@element-plus/icons-vue'
 import NavBar from '@/components/NavBar.vue';
 import ItemCard from '@/components/ItemCard.vue';
 import { baseURL, baseImgURL } from '@/utils/request';
@@ -117,8 +137,10 @@ import { baseURL, baseImgURL } from '@/utils/request';
 const userInfo = ref({})
 const showEditDialog = ref(false)
 const items = ref([])
+const favoritedItems = ref([])
 const router = useRouter()
 const loading = ref(false)
+const activeName = ref('first')
 const editForm = ref({
     username: '',
     email: '',
@@ -163,6 +185,15 @@ const fetchMyItem = async () => {
     }
 }
 
+const fetchUserFavorites = async () => {
+    try {
+        const data = await readUserFavorites()
+        favoritedItems.value = data
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 const handleImageSuccess = (response) => {
     editForm.value.avatar = `${baseImgURL}/${response.file_name}`
     console.log(editForm.value)
@@ -182,6 +213,7 @@ const submitEditForm = async () => {
 onMounted(() => {
     fetchUserInfo()
     fetchMyItem()
+    fetchUserFavorites()
 })
 </script>
 
@@ -240,6 +272,10 @@ onMounted(() => {
 }
 
 .items-section {
+    /* margin-top: 30px; */
+}
+
+.items-tabs {
     margin-top: 30px;
 }
 
@@ -247,6 +283,7 @@ onMounted(() => {
     display: flex;
     flex-wrap: wrap;
     margin-top: 20px;
+    margin-left: 5px;
 }
 
 .empty-state {

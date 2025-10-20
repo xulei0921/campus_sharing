@@ -14,3 +14,8 @@ export const checkItemFavorited = (item_id) => {
 export const deleteFavorite = (item_id) => {
     return request.delete(`/favorites/item/${item_id}`)
 }
+
+// 获取当前用户的收藏列表
+export const readUserFavorites = () => {
+    return request.get('/favorites/')
+}
