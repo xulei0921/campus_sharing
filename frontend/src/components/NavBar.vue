@@ -11,7 +11,6 @@
             >
                 <el-menu-item index="/index">首页</el-menu-item>
                 <el-menu-item index="/items/create">发布物品</el-menu-item>
-                <el-menu-item index="/my-items">我的物品</el-menu-item>
                 <el-menu-item index="/transactions">我的交易</el-menu-item>
                 <el-menu-item index="/chats">消息</el-menu-item>
             </el-menu>

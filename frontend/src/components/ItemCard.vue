@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { getCategoryById } from '@/api/categories';
 
 const category_detail = ref('')

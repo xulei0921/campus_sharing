@@ -37,3 +37,8 @@ export const getItemById = (item_id) => {
 export const readMyItems = () => {
     return request.get('/items/my-items')
 }
+
+// 更新物品信息
+export const updateItem = (item_id, newData) => {
+    return request.put(`/items/${item_id}`, newData)
+}

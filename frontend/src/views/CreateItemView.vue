@@ -79,6 +79,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import NavBar from '@/components/NavBar.vue';
 import { getAllCategories } from '@/api/categories';
 import { createItem, uploadItemImages } from '@/api/item';
@@ -99,7 +100,7 @@ const rules = {
         { required: true, message: '请输入物品标题', trigger: 'blur' }
     ],
     category_id: [
-        { required: true, message: '请选择物品分类', trigger: 'change' }
+        { required: true, message: '请选择物品分类', trigger: 'blur' }
     ],
     price: [
         { required: true, message: '请输入价格', trigger: 'blur' },
@@ -119,6 +120,7 @@ const rules = {
 const categories = ref([])
 const fileList = ref([])
 const form = ref(null)
+const router = useRouter()
 
 const fetchCategories = async () => {
     try {
@@ -146,6 +148,7 @@ const submitForm = async () => {
         await form.value.validate()
         await createItem(formModel.value)
         ElMessage.success("发布物品成功")
+        router.push('/index')
     } catch (error) {
         console.error(error)
     }
@@ -169,7 +172,7 @@ onMounted(() => {
 }
 
 .container {
-    min-width: 800px;
+    max-width: 1200px;
     margin: 20px auto;
     padding: 0 20px;
 }

@@ -86,6 +86,10 @@ def get_user_items(db: Session, user_id: int, skip: int = 0, limit: int = 20):
 def get_item(db: Session, item_id: int):
     return db.query(models.Item).filter(models.Item.id == item_id).first()
 
+# 获取物品图片 by ID
+def get_item_images(db: Session, item_id: int):
+    return db.query(models.ItemImage).filter(models.ItemImage.item_id == item_id).all()
+
 # 更新物品
 def update_item(db: Session, item_id: int, item_update: schemas.ItemUpdate, user_id: int):
     db_item = get_item(db, item_id)
@@ -104,9 +108,24 @@ def update_item(db: Session, item_id: int, item_update: schemas.ItemUpdate, user
         )
 
     # 更新字段
-    update_data = item_update.model_dump(exclude_unset=True)
+    update_data = item_update.model_dump(exclude_unset=True, exclude={"images"})
+    images_list = update_data.pop("images", None)  # 提取图片URL列表
+
     for key, value in update_data.items():
         setattr(db_item, key, value)
+
+    # 处理图片更新
+    if item_update.images:
+        db.query(models.ItemImage).filter(models.ItemImage.item_id == item_id).delete()
+
+        for image_data in item_update.images:
+            full_image_url = f"http://127.0.0.1:8000/static/images/{image_data.image_url}"
+
+            db_image = models.ItemImage(
+                item_id=item_id,
+                image_url=full_image_url
+            )
+            db.add(db_image)
 
     db.commit()
     db.refresh(db_item)

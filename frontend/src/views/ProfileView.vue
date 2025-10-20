@@ -171,6 +171,8 @@ const handleImageSuccess = (response) => {
 const submitEditForm = async () => {
     try {
         await updateCurrentUser(editForm.value)
+        showEditDialog.value = false
+        router.go(0)
         ElMessage.success('修改成功')
     } catch (error) {
         console.error(error)

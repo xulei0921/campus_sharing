@@ -95,6 +95,7 @@ class ItemUpdate(BaseModel):
     category_id: Optional[int] = None
     status: Optional[ItemStatus] = None
     location: Optional[str] = None
+    images: Optional[List[ItemImageCreate]] = []
 
 # 物品模型 - 响应（简略）
 class ItemBriefResponse(ItemBase):

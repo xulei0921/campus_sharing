@@ -114,6 +114,26 @@ def read_item(
 
     return db_item
 
+# 获取物品图片
+@router.get("/images/{item_id}", response_model=List[schemas.ItemImageResponse])
+def read_item_images(
+    item_id: int,
+    db: Session = Depends(get_db)
+):
+    """
+            根据ID获取物品图片（无需登录）
+
+            参数：
+            - item_id: 物品ID
+
+            返回：
+            - 物品图片
+    """
+    db_item_images = items_crud.get_item_images(db, item_id=item_id)
+    if db_item_images is None:
+        raise HTTPException(status_code=404, detail="物品图片不存在")
+    return db_item_images
+
 # 更新物品
 @router.put("/{item_id}", response_model=schemas.ItemDetailResponse)
 def update_item(
