@@ -152,21 +152,7 @@ class TransactionUpdate(BaseModel):
     meeting_time: Optional[datetime] = None
     meeting_location: Optional[str] = None
 
-# 交易模型 - 响应
-class TransactionResponse(TransactionBase):
-    id: int
-    item_id: int
-    buyer_id: int
-    seller_id: int
-    status: TransactionStatus
-    created_at: datetime
-    updated_at: datetime
-    item: ItemBriefResponse
-    buyer: UserResponse
-    seller: UserResponse
 
-    class Config:
-        from_attributes = True
 
 # 评价模型 - 基础
 class ReviewBase(BaseModel):
@@ -186,6 +172,23 @@ class ReviewResponse(ReviewBase):
     reviewee_id: int
     created_at: datetime
     reviewer: UserResponse
+
+    class Config:
+        from_attributes = True
+
+# 交易模型 - 响应
+class TransactionResponse(TransactionBase):
+    id: int
+    item_id: int
+    buyer_id: int
+    seller_id: int
+    status: TransactionStatus
+    created_at: datetime
+    updated_at: datetime
+    item: ItemBriefResponse
+    buyer: UserResponse
+    seller: UserResponse
+    reviews: list[ReviewResponse]=[]
 
     class Config:
         from_attributes = True

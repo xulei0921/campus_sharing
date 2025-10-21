@@ -43,6 +43,11 @@ const router = createRouter({
     {
       path: '/user/:id',
       
+    },
+    {
+      path: '/transactions',
+      component: () => import('@/views/TransactionsView.vue'),
+      meta: { title: '我的交易', requiresAuth: true }
     }
   ],
 })

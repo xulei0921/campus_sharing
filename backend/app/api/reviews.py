@@ -58,7 +58,7 @@ def read_user_reviews(
     )
 
 # 获取交易的评价
-@router.get("/transaction/{transaction_id}", response_model=schemas.ReviewResponse)
+@router.get("/transaction/{transaction_id}", response_model=List[schemas.ReviewResponse])
 def read_transaction_review(
     transaction_id: int,
     db: Session = Depends(get_db),

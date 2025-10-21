@@ -136,7 +136,8 @@ class Transaction(Base):
     # 关系：卖家
     seller = relationship("User", foreign_keys=[seller_id], back_populates="seller_transactions")
     # 关系：交易的评价
-    review = relationship("Review", back_populates="transaction", uselist=False)
+    # reviews = relationship("Review", back_populates="transaction", uselist=False)
+    reviews = relationship("Review", back_populates="transaction")
 
 # 评价模型
 class Review(Base):
@@ -151,7 +152,8 @@ class Review(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     # 关系：评价所属交易
-    transaction = relationship("Transaction", back_populates="review")
+    transaction = relationship("Transaction", back_populates="reviews")
+    # transaction = relationship("Transaction", foreign_keys=[transaction_id], back_populates="review")
     # 关系：评论者
     reviewer = relationship("User", foreign_keys=[reviewer_id], back_populates="reviewer_reviews")
 

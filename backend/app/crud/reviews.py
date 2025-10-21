@@ -47,7 +47,8 @@ def create_review(db: Session, review: schemas.ReviewCreate, reviewer_id: int):
 
     # 检查交易是否已评价
     existing_review = db.query(models.Review).filter(
-        models.Review.transaction_id == review.transaction_id
+        models.Review.transaction_id == review.transaction_id,
+        models.Review.reviewer_id == reviewer_id
     ).first()
 
     if existing_review:
@@ -99,4 +100,4 @@ def get_transaction_review(db: Session, transaction_id: int):
     """获取指定交易的评价"""
     return db.query(models.Review).filter(
         models.Review.transaction_id == transaction_id
-    ).first()
+    ).all()
